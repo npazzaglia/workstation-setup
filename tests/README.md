@@ -9,6 +9,7 @@ This directory contains all smoke tests, validation checks, and CI test utilitie
 Ensure that:
 
 * The `bootstrap` script runs to completion with zero errors
+* Correct OS-specific `setup-*.sh` or `setup.ps1` is dispatched
 * Core tools are installed and functional
 * Environment settings (e.g. dotfiles, shell, aliases) are correctly applied
 * Failures are caught early in GitHub Actions
@@ -19,7 +20,8 @@ Ensure that:
 
 ### 🔹 Smoke Tests
 
-* OS-specific `smoke-*.sh` and `smoke-*.ps1` scripts
+* OS-specific `smoke-bootstrap.*` scripts validate `bootstrap` dispatches correctly
+* `smoke-setup.*` scripts verify dry-run install logic per OS
 * Confirm required binaries exist in `$PATH`
 * Check for expected version numbers or config files
 
@@ -33,19 +35,22 @@ Ensure that:
 
 ## 🧪 Running Tests Locally
 
-### Unix/macOS
+### macOS/Linux
 
 ```sh
-./scripts/setup.sh
+chmod +x bootstrap
+./bootstrap --dry-run
 ./scripts/test-setup.sh
-./tests/smoke-tools.sh
+./tests/macos/smoke-bootstrap.sh
 ```
 
-### Windows
+### Windows (PowerShell)
 
 ```powershell
-./scripts/setup.ps1
-./tests/smoke-tools.ps1
+Set-ExecutionPolicy Bypass -Scope Process
+./bootstrap --dry-run
+./scripts/test-setup.ps1
+./tests/windows/smoke-bootstrap.ps1
 ```
 
 ---
@@ -53,6 +58,7 @@ Ensure that:
 ## ✅ Passing Criteria
 
 * Script exits with code `0`
+* Dispatch prints expected target (`setup-macos.sh`, `setup-linux.sh`, or `setup.ps1`)
 * Required tools pass version check (e.g. `git --version`, `python -V`)
 * Dotfiles exist and are symlinked properly
 * Shell loads without error and aliases are functional
@@ -74,7 +80,7 @@ CI workflow defined in `.github/workflows/ci.yml`:
 
 * Runs on `push` or `pull_request`
 * Builds fresh OS VMs using matrix (macOS, Ubuntu, Windows)
-* Executes `bootstrap` + test suite per OS
+* Executes `bootstrap --dry-run` + test suite per OS
 * Uploads `logs/setup.log` and `error.log` as artifacts
 
 ---
@@ -90,17 +96,22 @@ CI workflow defined in `.github/workflows/ci.yml`:
 
 ## 📂 Files in This Directory
 
-| File                   | Purpose                              |
-| ---------------------- | ------------------------------------ |
-| `smoke-tools.sh`       | Verifies core CLI tools on Unix      |
-| `smoke-tools.ps1`      | Verifies CLI tools on Windows        |
-| `validate-dotfiles.sh` | Checks for symlinks and shell config |
-| `smoke-editor.sh`      | Confirms VS Code is available        |
+| File                          | Purpose                                 |
+| ----------------------------- | --------------------------------------- |
+| `macos/smoke-bootstrap.sh`    | Validates bootstrap dispatch on macOS   |
+| `linux/smoke-bootstrap.sh`    | Validates bootstrap dispatch on Linux   |
+| `windows/smoke-bootstrap.ps1` | Validates bootstrap dispatch on Windows |
+| `smoke-tools.sh`              | Verifies core CLI tools on Unix         |
+| `smoke-tools.ps1`             | Verifies CLI tools on Windows           |
+| `validate-dotfiles.sh`        | Checks for symlinks and shell config    |
+| `smoke-editor.sh`             | Confirms VS Code is available           |
 
 ---
 
 ## 🔁 Related Files
 
+* `bootstrap`
+* `scripts/setup-macos.sh`, `setup-linux.sh`, `setup.ps1`
 * `scripts/test-setup.sh`
 * `logs/setup.log`, `logs/error.log`
 * `.github/workflows/ci.yml`
@@ -112,3 +123,4 @@ CI workflow defined in `.github/workflows/ci.yml`:
 * Add shell startup test to confirm aliases prompt
 * Include `ShellCheck` or `PSRule` lint validation
 * Add matrix entry for WSL2 (Ubuntu on Windows)
+* Integrate tests for config parsing from `dev_env.yml`

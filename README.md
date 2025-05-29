@@ -1,22 +1,45 @@
 # README
 
-![License](https://img.shields.io/github/license/npazzaglia/workstation-setup)
+![License](https://img.shields.io/github/license/youruser/workstation-setup)
 ![Platform](https://img.shields.io/badge/platform-macOS%20%7C%20Linux%20%7C%20Windows-blue)
 
 ---
 
 ## 🚀 Quick Start
 
-Clone the repo and run the unified bootstrap script:
+Clone the repo and run the **cross-platform bootstrap script**:
 
 ### All Platforms
 
 ```sh
 git clone https://github.com/youruser/workstation-setup.git
 cd workstation-setup
+```
+
+* On macOS/Linux:
+
+```bash
 chmod +x bootstrap
 ./bootstrap
 ```
+
+* On Windows PowerShell:
+
+```powershell
+Set-ExecutionPolicy Bypass -Scope Process
+./bootstrap
+```
+
+### What It Does
+
+* Detects OS automatically
+* Invokes `scripts/setup.sh` on macOS/Linux
+* Invokes `scripts/setup.ps1` via PowerShell on Windows
+
+### ⚠️ Requirements
+
+* `bash` must be available on macOS/Linux
+* `pwsh` or `powershell` must be in PATH on Windows
 
 ---
 
@@ -64,17 +87,9 @@ chmod +x bootstrap
 * Admin/root privileges
 * SSH key for GitHub (optional)
 
-### Install Steps (Unified)
+### Install Steps
 
-```sh
-chmod +x bootstrap
-./bootstrap
-```
-
-This will auto-detect your OS and invoke the appropriate setup script:
-
-* macOS/Linux: `scripts/setup.sh`
-* Windows: `scripts/setup.ps1` via PowerShell
+See "Quick Start" above for exact steps.
 
 ---
 

@@ -1,0 +1,27 @@
+#!/usr/bin/env bash
+# ; exec pwsh -NoProfile -ExecutionPolicy Bypass -File "${BASH_SOURCE[0]}" "$@"
+set -euo pipefail
+
+# determine where this script lives
+SCRIPT_DIR=$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)
+
+if [ -n "${BASH_VERSION:-}" ]; then
+  # Unix branch: dispatch based on OS
+  case "$(uname -s)" in
+    Darwin)
+      bash "$SCRIPT_DIR/scripts/setup-macos.sh" "$@"
+      ;;
+    Linux)
+      bash "$SCRIPT_DIR/scripts/setup-linux.sh" "$@"
+      ;;
+    *)
+      echo "Error, unsupported OS: $(uname -s)" >&2
+      exit 1
+      ;;
+  esac
+  exit 0
+fi
+
+# PowerShell branch (Windows)
+Write-Host "Detected PowerShell environment..."
+pwsh -NoProfile -ExecutionPolicy Bypass -File "$SCRIPT_DIR/scripts/setup-windows.ps1" @args
