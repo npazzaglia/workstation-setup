@@ -1,0 +1,127 @@
+# This file defines all tools, languages, editors, and apps to install on each OS.
+# The structure is declarative: the setup scripts read this file and act accordingly.
+#
+# === Data Model ===
+#
+# <category>:
+#   <tool_name>:
+#     <os>:                     # 'macos', 'linux', 'windows', or 'all'
+#       enabled: true|false     # Required if you want it installed
+#       manual: true|false      # If true, only log to manual-install.md
+#       version: <string>       # Optional: language or app version
+#       manager: <tool>         # Optional: 'pyenv', 'nvm', etc.
+#       extensions: [...]       # Optional: for editors like VS Code
+
+languages:
+  python:
+    macos:
+      enabled: true
+      version: "3.11.4"
+      manager: pyenv
+    linux:
+      enabled: true
+      version: "3.11.4"
+      manager: pyenv
+    windows:
+      enabled: true
+      version: "3.11.4"
+      manager: pyenv-win
+
+  node:
+    macos:
+      enabled: true
+      version: "20.10.0"
+      manager: nvm
+    windows:
+      enabled: true
+      version: "20.10.0"
+      manager: nvm-windows
+
+editors:
+  vscode:
+    all:
+      enabled: true
+      extensions:
+        - ms-python.python
+        - esbenp.prettier-vscode
+  cursor:
+    macos:
+      enabled: true
+      manual: true
+    windows:
+      enabled: true
+      manual: true
+
+terminals:
+  zsh:
+    macos:
+      enabled: true
+    linux:
+      enabled: true
+    windows:
+      enabled: false
+  powershell:
+    windows:
+      enabled: true
+    macos:
+      enabled: true
+    linux:
+      enabled: true
+
+cli_tools:
+  git:
+    all: true
+  docker:
+    macos: true
+    linux: true
+    windows: true
+  jq:
+    all: true
+
+apps:
+  chrome:
+    all:
+      enabled: true
+      manual: true
+  firefox:
+    all:
+      enabled: true
+      manual: true
+  slack:
+    all:
+      enabled: true
+      manual: true
+  discord:
+    all:
+      enabled: true
+      manual: true
+  1password:
+    all:
+      enabled: true
+      manual: true
+  spotify:
+    all:
+      enabled: true
+      manual: true
+
+gui_apps:
+  neo4j_desktop:
+    macos:
+      manual: true
+    windows:
+      manual: true
+  commanderone_pro:
+    macos:
+      manual: true
+  windsurf:
+    macos:
+      manual: true
+
+
+dotfiles:
+  link: true
+  backup: true
+  files:
+    - .zshrc
+    - .gitconfig
+    - .bashrc
