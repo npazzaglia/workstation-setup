@@ -1,6 +1,6 @@
 # README
 
-![License](https://img.shields.io/github/license/youruser/workstation-setup)
+![License](https://img.shields.io/github/license/npazzaglia/workstation-setup)
 ![Platform](https://img.shields.io/badge/platform-macOS%20%7C%20Linux%20%7C%20Windows-blue)
 
 ---
