@@ -13,7 +13,7 @@ mkdir -p "$LOG_DIR"
 # Run the setup script in dry-run mode
 echo "Running setup-macos.sh --dry-run..."
 chmod +x "$ROOT_DIR/scripts/setup-macos.sh"
-bash "$ROOT_DIR/scripts/setup-macos.sh" --dry-run
+"$ROOT_DIR/scripts/setup-macos.sh" --dry-run
 
 # Assertions: verify the dry-run log contains the expected entries
 echo "Verifying dry-run output in $LOG_DIR/setup.log..."
