@@ -18,6 +18,10 @@ done
 
 # Bootstrap prerequisites: Homebrew and yq
 bootstrap_prereqs() {
+  if [[ "$DRY_RUN" == "true" ]]; then
+    echo "🧪 [dry-run] Skipping bootstrap_prereqs (Homebrew & yq)" | tee -a "$LOG_DIR/setup.log"
+    return
+  fi
   if ! command -v brew >/dev/null 2>&1; then
     echo "Installing Homebrew..." | tee -a "$LOG_DIR/setup.log"
     /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)" \
@@ -59,21 +63,12 @@ fi
 
 bootstrap_prereqs
 
-# Define the phases and iterate
 PHASES=(prerequisites packages casks apps postinstall)
 for phase in "${PHASES[@]}"; do
   echo "=== Phase: $phase ===" | tee -a "$LOG_DIR/setup.log"
   # Iterate enabled tools matching this phase and macos
   while IFS= read -r name; do
-    installer=$(yq eval -r "
-      .tools[]
-      | select(.name == \"${name}\" 
-        and .phase == \"${phase}\" 
-        and .enabled == true 
-        and .manual == false 
-        and any(.os[]; . == \"macos\"))
-      | .installer
-    " "$YAML_FILE")
+    installer=$(yq eval -r ".tools[] | select(.name == \"${name}\" and .phase == \"${phase}\" and .enabled and (.manual == false) and (.os[] == \"macos\")) | .installer" "$YAML_FILE")
     case "$installer" in
       formula) cmd="brew install ${name}" ;;
       cask)    cmd="brew install --cask ${name}" ;;
@@ -83,14 +78,7 @@ for phase in "${PHASES[@]}"; do
         ;;
     esac
     install_tool "$name" "$cmd"
-  done < <(yq eval -r "
-    .tools[]
-    | select(.phase == \"${phase}\" 
-      and .enabled == true 
-      and .manual == false 
-      and any(.os[]; . == \"macos\"))
-    | .name
-  " "$YAML_FILE")
+  done < <(yq eval -r ".tools[] | select(.phase == \"${phase}\" and .enabled and (.manual == false) and (.os[] == \"macos\")) | .name" "$YAML_FILE")
 done
 
 echo "Setup complete." | tee -a "$LOG_DIR/setup.log"
