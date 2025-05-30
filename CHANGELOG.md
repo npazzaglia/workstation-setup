@@ -4,6 +4,28 @@ All notable changes to this project will be documented in this file.
 
 ---
 
+## [0.3.0.0] – 2025-05-30
+
+### 🆕 Added
+* Extract shared functions into `scripts/lib.sh` (`bootstrap_prereqs`, `install_tool`, `run_phase_loop`)
+* Source `lib.sh` in `setup-macos.sh` and refactor entrypoint to call `run_phase_loop`
+* Add skip-logging for disabled or OS-mismatched tools in dry-run
+* Implement malformed-YAML fallback with parse-error detection in `run_phase_loop`
+* Add smoke tests:
+  - `tests/macos/smoke-engine-dev-env.sh`
+  - `tests/macos/smoke-engine-skip-logging.sh`
+  - `tests/macos/smoke-engine-bad-yaml.sh`
+
+### 🐛 Fixed
+* Prevent real Homebrew & yq installs during dry-run
+* Simplify `yq` selectors to avoid syntax errors
+
+### ✅ Status
+* YAML-driven parsing and installer logic fully implemented
+* Smoke tests passing for valid, skip-logging, and error scenarios
+
+---
+
 ## \[0.2.0.0] – 2025-05-30
 
 ### 🆕 Added
