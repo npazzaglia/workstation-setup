@@ -1,6 +1,9 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
+# Source shared library functions
+source "$(dirname "${BASH_SOURCE[0]}")/lib.sh"
+
 # Directory setup
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 ROOT_DIR="$(cd "$SCRIPT_DIR/.." && pwd)"
@@ -16,38 +19,6 @@ for arg in "$@"; do
   esac
 done
 
-# Bootstrap prerequisites: Homebrew and yq
-bootstrap_prereqs() {
-  if [[ "$DRY_RUN" == "true" ]]; then
-    echo "🧪 [dry-run] Skipping bootstrap_prereqs (Homebrew & yq)" | tee -a "$LOG_DIR/setup.log"
-    return
-  fi
-  if ! command -v brew >/dev/null 2>&1; then
-    echo "Installing Homebrew..." | tee -a "$LOG_DIR/setup.log"
-    /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)" \
-      2>>"$LOG_DIR/error.log" | tee -a "$LOG_DIR/setup.log"
-  fi
-  echo "Updating Homebrew..." | tee -a "$LOG_DIR/setup.log"
-  brew update 2>>"$LOG_DIR/error.log" | tee -a "$LOG_DIR/setup.log"
-
-  if ! command -v yq >/dev/null 2>&1; then
-    echo "Installing yq for YAML parsing..." | tee -a "$LOG_DIR/setup.log"
-    brew install yq 2>>"$LOG_DIR/error.log" | tee -a "$LOG_DIR/setup.log"
-  fi
-}
-
-# Generic install helper
-install_tool() {
-  local name="$1"
-  local cmd="$2"
-  echo "Processing $name..." | tee -a "$LOG_DIR/setup.log"
-  if [[ "$DRY_RUN" == "true" ]]; then
-    echo "[dry-run] Would run: $cmd" | tee -a "$LOG_DIR/setup.log"
-  else
-    eval "$cmd" 2>>"$LOG_DIR/error.log" | tee -a "$LOG_DIR/setup.log"
-  fi
-}
-
 # Ensure YAML exists
 if [[ ! -f "$YAML_FILE" ]]; then
   echo "Error: $YAML_FILE not found." | tee -a "$LOG_DIR/error.log"
@@ -62,23 +33,6 @@ else
 fi
 
 bootstrap_prereqs
-
-PHASES=(prerequisites packages casks apps postinstall)
-for phase in "${PHASES[@]}"; do
-  echo "=== Phase: $phase ===" | tee -a "$LOG_DIR/setup.log"
-  # Iterate enabled tools matching this phase and macos
-  while IFS= read -r name; do
-    installer=$(yq eval -r ".tools[] | select(.name == \"${name}\" and .phase == \"${phase}\" and .enabled and (.manual == false) and (.os[] == \"macos\")) | .installer" "$YAML_FILE")
-    case "$installer" in
-      formula) cmd="brew install ${name}" ;;
-      cask)    cmd="brew install --cask ${name}" ;;
-      *)
-        echo "Skipping ${name}: unknown installer type '${installer}'" | tee -a "$LOG_DIR/setup.log"
-        continue
-        ;;
-    esac
-    install_tool "$name" "$cmd"
-  done < <(yq eval -r ".tools[] | select(.phase == \"${phase}\" and .enabled and (.manual == false) and (.os[] == \"macos\")) | .name" "$YAML_FILE")
-done
+run_phase_loop
 
 echo "Setup complete." | tee -a "$LOG_DIR/setup.log"
