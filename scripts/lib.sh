@@ -33,6 +33,41 @@ install_tool() {
   fi
 }
 
+# Homebrew installer helper
+install_brew_tool() {
+  local tool="$1"
+  local log_enabled="${LOGGING:-true}"
+
+  if [[ "$log_enabled" == "true" ]]; then
+    echo "Processing $tool..." | tee -a "$LOG_DIR/setup.log"
+  else
+    echo "Processing $tool..."
+  fi
+
+  if ! command -v brew >/dev/null 2>&1; then
+    if [[ "$log_enabled" == "true" ]]; then
+      echo "Warning: brew not found. Cannot install $tool" | tee -a "$LOG_DIR/setup.log"
+    else
+      echo "Warning: brew not found. Cannot install $tool"
+    fi
+    return 1
+  fi
+
+  if [[ "${DRY_RUN:-false}" == "true" ]]; then
+    if [[ "$log_enabled" == "true" ]]; then
+      echo "[dry-run] Would run: brew install $tool" | tee -a "$LOG_DIR/setup.log"
+    else
+      echo "[dry-run] Would run: brew install $tool"
+    fi
+  else
+    if [[ "$log_enabled" == "true" ]]; then
+      brew install "$tool" 2>>"$LOG_DIR/error.log" | tee -a "$LOG_DIR/setup.log"
+    else
+      brew install "$tool"
+    fi
+  fi
+}
+
 # Run the per-phase iteration loop
 run_phase_loop() {
   # Validate YAML syntax

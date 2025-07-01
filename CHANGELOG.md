@@ -4,6 +4,16 @@ All notable changes to this project will be documented in this file.
 
 ---
 
+## [0.3.1.0] – 2025-05-31
+
+### 🆕 Added
+* `install_brew_tool` helper in `scripts/lib.sh` for Homebrew installs
+
+### ✅ Status
+* Library functions expanded; no behavior change yet
+
+---
+
 ## [0.3.0.0] – 2025-05-30
 
 ### 🆕 Added
