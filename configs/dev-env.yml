@@ -1,25 +1,28 @@
-# Declarative list of tools for workstation setup using a flat tools-list schema.
+# dev_env.yml - list of Homebrew tools
 #
 # Fields:
-#   name       - unique identifier for the tool (quoted if it contains special chars)
-#   category   - high-level grouping (e.g., languages, editors, terminals, cli_tools, apps, gui_apps, dotfiles)
-#   phase      - install phase (prerequisites, packages, casks, apps, postinstall)
-#   installer  - installation type for Homebrew (formula or cask) or other manager
-#   os         - list of OS targets (macos, linux, windows)
-#   enabled    - true to auto-install, false to skip
-#   manual     - true to log for manual install instead of automated
-#   version    - optional version constraint or explicit version string
-#   depends_on - optional list of tool names that must install first
-#
-# Example entry for iTerm2 on macOS:
+#   name:      tool identifier
+#   manager:   package manager to use
+#   manual:    true if manual install is required
+#   platform:  target operating system
+
 tools:
-  - name: "iterm2"
-    category: "terminals"
-    phase: "apps"
-    installer: "cask"
-    os:
-      - macos
-    enabled: true
+  - name: curl
+    manager: homebrew
     manual: false
-    version: ""      # leave empty or remove if not needed
-    depends_on: []   # add tool names here if this has dependencies
+    platform: macos
+
+  - name: git
+    manager: homebrew
+    manual: false
+    platform: macos
+
+  - name: htop
+    manager: homebrew
+    manual: false
+    platform: macos
+
+  - name: 1password-cli
+    manager: homebrew
+    manual: false
+    platform: macos
