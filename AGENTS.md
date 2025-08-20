@@ -21,8 +21,10 @@ scripts/
   setup-windows.ps1           # Windows engine (PowerShell)
 configs/
   dev-env.yml                 # Declarative tool list (name, manager, manual, platform)
-  .zshrc  .bashrc  .aliases   # Shell templates (chezmoi-ready later)
-  .gitconfig  settings.json   # App/editor templates
+dotfiles/                     # Chezmoi-managed home files
+  dot_zshrc  dot_gitconfig    # Shell and Git templates
+  aliases.sh aliases.ps1      # Shared alias definitions
+  dot_config/Code/User/settings.json # VS Code settings
 tests/
   macos/
     smoke-bootstrap.sh

@@ -21,7 +21,7 @@ Configure PowerShell as the default shell environment on Windows (and optionally
 | File                               | Target Path                    | Managed By            |
 | ---------------------------------- | ------------------------------ | --------------------- |
 | `Microsoft.PowerShell_profile.ps1` | `$PROFILE` (platform-specific) | `scripts/setup.ps1`   |
-| Aliases & Prompt                   | Defined in profile script      | `configs/aliases.ps1` |
+| Aliases & Prompt                   | Defined in profile script      | `dotfiles/aliases.ps1` |
 
 **Behavior:**
 

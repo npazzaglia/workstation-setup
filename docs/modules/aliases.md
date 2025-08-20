@@ -10,8 +10,8 @@ Define and install a consistent set of cross-platform command-line aliases to ac
 
 | Shell      | File Injected To        | Managed By            |
 | ---------- | ----------------------- | --------------------- |
-| zsh/bash   | `~/.zshrc`, `~/.bashrc` | `configs/aliases.sh`  |
-| PowerShell | `$PROFILE`              | `configs/aliases.ps1` |
+| zsh/bash   | `~/.zshrc`, `~/.bashrc` | `dotfiles/aliases.sh`  |
+| PowerShell | `$PROFILE`              | `dotfiles/aliases.ps1` |
 
 ---
 
@@ -19,8 +19,8 @@ Define and install a consistent set of cross-platform command-line aliases to ac
 
 Aliases are stored in:
 
-* `configs/aliases.sh` (for bash/zsh)
-* `configs/aliases.ps1` (for PowerShell)
+* `dotfiles/aliases.sh` (for bash/zsh)
+* `dotfiles/aliases.ps1` (for PowerShell)
 
 **Typical entries include:**
 

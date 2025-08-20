@@ -4,6 +4,17 @@ All notable changes to this project will be documented in this file.
 
 ---
 
+## [0.3.1.0] – 2025-06-02
+
+### 🆕 Added
+* `dotfiles/` directory managed by `chezmoi`
+* `bootstrap` applies dotfiles via `chezmoi`
+
+### 🧪 Tests
+* Smoke tests verify `chezmoi` dry-run output
+
+---
+
 ## [0.3.0.0] – 2025-05-30
 
 ### 🆕 Added

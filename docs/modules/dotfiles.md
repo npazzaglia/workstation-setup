@@ -8,9 +8,9 @@ Install and manage custom configuration files for shells, git, editors, and othe
 
 ## 📦 Install Method
 
-| OS  | Method          | Source               |
-| --- | --------------- | -------------------- |
-| All | Symlink or copy | `configs/` directory |
+| OS  | Method          | Source      |
+| --- | ---------------- | ----------- |
+| All | `chezmoi apply` | `dotfiles/` |
 
 ---
 
@@ -18,13 +18,11 @@ Install and manage custom configuration files for shells, git, editors, and othe
 
 | Dotfile            | Target Path           | Source File                    | Notes                           |
 | ------------------ | --------------------- | ------------------------------ | ------------------------------- |
-| `.zshrc`           | `~/.zshrc`            | `configs/.zshrc`               | Used by zsh login shell         |
-| `.bashrc`          | `~/.bashrc`           | `configs/.bashrc`              | For bash (optional)             |
-| `.gitconfig`       | `~/.gitconfig`        | `configs/.gitconfig`           | Git user identity, settings     |
-| `settings.json`    | VS Code settings path | `configs/vscode-settings.json` | Optional, if `vscode` installed |
-| `.nvmrc`           | Project root (opt)    | `configs/.nvmrc`               | Node.js version pinning         |
-| `.python-version`  | Project root          | `configs/.python-version`      | Python version pinning (pyenv)  |
-| PowerShell Profile | `$PROFILE`            | `configs/aliases.ps1`          | Auto-injected aliases           |
+| `.zshrc`           | `~/.zshrc`            | `dotfiles/dot_zshrc`               | Used by zsh login shell         |
+| `.gitconfig`       | `~/.gitconfig`        | `dotfiles/dot_gitconfig`           | Git user identity, settings     |
+| `settings.json`    | VS Code settings path | `dotfiles/dot_config/Code/User/settings.json` | Optional, if `vscode` installed |
+| `aliases.sh`       | `~/aliases.sh`        | `dotfiles/aliases.sh`          | Common shell aliases            |
+| `aliases.ps1`      | `$PROFILE`            | `dotfiles/aliases.ps1`         | PowerShell aliases              |
 
 ---
 
@@ -39,12 +37,12 @@ Install and manage custom configuration files for shells, git, editors, and othe
 ## 🧪 Smoke Test
 
 ```bash
-diff ~/.zshrc configs/.zshrc
-diff ~/.gitconfig configs/.gitconfig
+diff ~/.zshrc dotfiles/dot_zshrc
+diff ~/.gitconfig dotfiles/dot_gitconfig
 ```
 
 ```powershell
-Compare-Object (Get-Content $PROFILE) (Get-Content configs/aliases.ps1)
+Compare-Object (Get-Content $PROFILE) (Get-Content dotfiles/aliases.ps1)
 ```
 
 Expected: Files match or show successful linking/copying.
