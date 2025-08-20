@@ -20,7 +20,7 @@ Install and configure Git for version control on all supported platforms.
 
 | File         | Target Path    | Managed By           |
 | ------------ | -------------- | -------------------- |
-| `.gitconfig` | `~/.gitconfig` | `configs/.gitconfig` |
+| `.gitconfig` | `~/.gitconfig` | `dotfiles/dot_gitconfig` |
 
 **Merged via**: Upsert logic that preserves user-defined values but injects defaults if not present.
 

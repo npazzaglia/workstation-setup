@@ -85,7 +85,7 @@ This logic is embedded within a single `bootstrap` file using multiline heredoc-
 2. **Determine tools to install**
 3. **Check for existing installs**
 4. **Install only what’s missing**
-5. **Link/patch dotfiles into shell envs**
+5. **Apply dotfiles via `chezmoi`**
 6. **Log output and errors to `logs/`**
 7. **Run validation smoke test**
 
@@ -95,11 +95,11 @@ This logic is embedded within a single `bootstrap` file using multiline heredoc-
 
 | Component     | Setup Path                 | Config Source            |
 | ------------- | -------------------------- | ------------------------ |
-| Shell         | `.bashrc` / `.zshrc`       | `configs/`, `dotfiles/`  |
-| Git           | `.gitconfig`               | `configs/`               |
+| Shell         | `.bashrc` / `.zshrc`       | `dotfiles/`          |
+| Git           | `.gitconfig`               | `dotfiles/`          |
 | Python        | `pyenv`, `.python-version` | `configs/dev_env.yml`    |
 | Node.js       | `nvm`, `.nvmrc`            | `configs/dev_env.yml`    |
-| Editor        | VS Code (`settings.json`)  | `configs/` or downloaded |
+| Editor        | VS Code (`settings.json`)  | `dotfiles/`          |
 | Secrets (opt) | `1password` CLI            | Environment + `op run`   |
 
 ---

@@ -23,4 +23,13 @@ else
   exit 1
 fi
 
+# Check for chezmoi step
+if grep -q "chezmoi" "$BOOTSTRAP_OUT"; then
+  echo "✅ Chezmoi step detected"
+else
+  echo "❌ Expected chezmoi step not found in output:"
+  cat "$BOOTSTRAP_OUT"
+  exit 1
+fi
+
 rm "$BOOTSTRAP_OUT"

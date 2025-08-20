@@ -1,0 +1,3 @@
+# Managed by chezmoi
+source ~/aliases.sh
+export EDITOR="code"

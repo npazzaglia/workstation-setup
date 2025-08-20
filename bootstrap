@@ -5,6 +5,11 @@ set -euo pipefail
 # determine where this script lives
 SCRIPT_DIR=$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)
 
+DRY_RUN=false
+for arg in "$@"; do
+  [[ $arg == --dry-run ]] && DRY_RUN=true
+done
+
 if [ -n "${BASH_VERSION:-}" ]; then
   # Unix branch: dispatch based on OS
   case "$(uname -s)" in
@@ -19,6 +24,21 @@ if [ -n "${BASH_VERSION:-}" ]; then
       exit 1
       ;;
   esac
+
+  CHEZMOI_SOURCE="$SCRIPT_DIR/dotfiles"
+  if command -v chezmoi >/dev/null 2>&1; then
+    if [ "$DRY_RUN" = true ]; then
+      echo "🧪 [dry-run] applying dotfiles with chezmoi"
+      chezmoi init --source="$CHEZMOI_SOURCE" >/dev/null 2>&1 || true
+      chezmoi apply --source="$CHEZMOI_SOURCE" --dry-run
+    else
+      echo "📁 Applying dotfiles with chezmoi"
+      chezmoi init --source="$CHEZMOI_SOURCE" >/dev/null 2>&1 || true
+      chezmoi apply --source="$CHEZMOI_SOURCE"
+    fi
+  else
+    echo "⚠️ chezmoi not found; skipping dotfiles"
+  fi
   exit 0
 fi
 

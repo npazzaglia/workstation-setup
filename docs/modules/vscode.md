@@ -20,8 +20,8 @@ Install Visual Studio Code and apply user configuration (extensions, settings) a
 
 | File                  | Target Path                                                                                          | Managed By                     |
 | --------------------- | ---------------------------------------------------------------------------------------------------- | ------------------------------ |
-| `settings.json`       | `~/.config/Code/User/settings.json` (Linux/macOS) <br> `%APPDATA%\Code\User\settings.json` (Windows) | `configs/vscode-settings.json` |
-| Extensions List (opt) | `vscode-extensions.txt`                                                                              | `configs/`                     |
+| `settings.json`       | `~/.config/Code/User/settings.json` (Linux/macOS) <br> `%APPDATA%\Code\User\settings.json` (Windows) | `dotfiles/dot_config/Code/User/settings.json` |
+| Extensions List (opt) | `vscode-extensions.txt`                                                                              | `dotfiles/`                     |
 
 **Merge Behavior:**
 

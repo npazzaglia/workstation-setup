@@ -20,14 +20,14 @@ Install and configure `zsh` as the default login shell on macOS and Linux system
 
 | File        | Target Path     | Managed By       |
 | ----------- | --------------- | ---------------- |
-| `.zshrc`    | `~/.zshrc`      | `configs/.zshrc` |
+| `.zshrc`    | `~/.zshrc`      | `dotfiles/dot_zshrc` |
 | `oh-my-zsh` | `~/.oh-my-zsh`  | Install script   |
 | Theme       | `ZSH_THEME=...` | Set in `.zshrc`  |
 
 **Behavior:**
 
 * Backs up existing `.zshrc` if present
-* Symlinks `configs/.zshrc` into `~`
+* Applies `dotfiles/dot_zshrc` with `chezmoi`
 * Installs `oh-my-zsh` from GitHub if not present
 
 ---

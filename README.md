@@ -63,10 +63,13 @@ Set-ExecutionPolicy Bypass -Scope Process
 │   ├── setup.ps1             # Windows installer
 │   ├── test-setup.sh         # Validation script
 ├── 📂 configs/
-│   ├── .bashrc
-│   ├── .zshrc
-│   ├── .gitconfig
-│   ├── vscode-settings.json
+│   └── dev-env.yml           # Tool declarations
+├── 📂 dotfiles/
+│   ├── dot_zshrc             # zsh config (chezmoi)
+│   ├── dot_gitconfig         # Git config (chezmoi)
+│   ├── aliases.sh            # Shared shell aliases
+│   ├── aliases.ps1           # PowerShell aliases
+│   └── dot_config/Code/User/settings.json # VS Code settings
 ├── 📂 packages/
 │   ├── Brewfile              # macOS/Linux packages
 │   ├── choco-install.ps1     # Windows packages
